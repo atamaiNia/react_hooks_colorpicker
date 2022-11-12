@@ -9,11 +9,11 @@ const colorPickerOptions = [
   { label: 'indigo', color: '#3f51b5 ' },
 ];
 
-export const App = () => {
+export default function App() {
   return (
     <div className="Container">
       <h1>React - color picker</h1>
       <ColorPicker options={colorPickerOptions} />
     </div>
   );
-};
+}

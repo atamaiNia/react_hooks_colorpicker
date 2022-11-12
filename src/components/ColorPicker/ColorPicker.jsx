@@ -1,51 +1,33 @@
-import React, { PureComponent } from 'react';
+import { useState } from 'react';
 import './ColorPicker.css';
 import classNames from 'classnames';
 
-class ColorPicker extends PureComponent {
-  state = {
-    activeOptionIdx: 2,
+export default function ColorPicker({ options }) {
+  const [activeOptionIdx, setactiveOptionIdx] = useState(0);
+
+  const makeOptionClassName = index => {
+    return index === activeOptionIdx
+      ? 'ColorPicker__option--active'
+      : 'ColorPicker__option';
   };
 
-  setActiveIdx = index => {
-    this.setState({ activeOptionIdx: index });
-  };
+  const { label } = options[activeOptionIdx];
 
-  makeOptionClassName = index => {
-    // const optionClasses = ['ColorPicker__option'];
-    // if (index === this.state.activeOptionIdx) {
-    //   optionClasses.push('ColorPicker__option--active');
-    // }
-    // return optionClasses.join(' ');
-
-    return classNames('ColorPicker__option', {
-      'ColorPicker__option--active': index === this.state.activeOptionIdx,
-    });
-  };
-
-  render() {
-    const { activeOptionIdx } = this.state;
-    const { options } = this.props;
-    const { label } = options[activeOptionIdx];
-
-    return (
-      <div className="ColorPicker">
-        <h1 className="ColorPicker__title">
-          Вибраний колір: <span>{label}</span>
-        </h1>
-        <div>
-          {options.map(({ label, color }, index) => (
-            <button
-              key={label}
-              className={this.makeOptionClassName(index)}
-              style={{ backgroundColor: color }}
-              onClick={() => this.setActiveIdx(index)}
-            ></button>
-          ))}
-        </div>
+  return (
+    <div className="ColorPicker">
+      <h1 className="ColorPicker__title">
+        Вибраний колір: <span>{label}</span>
+      </h1>
+      <div>
+        {options.map(({ label, color }, index) => (
+          <button
+            key={label}
+            className={makeOptionClassName(index)}
+            style={{ backgroundColor: color }}
+            onClick={() => setactiveOptionIdx(index)}
+          ></button>
+        ))}
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default ColorPicker;
